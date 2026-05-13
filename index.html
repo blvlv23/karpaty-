@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Санаторій Карпати · Трускавець</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pine:#1a3d2b;--pine2:#2d6147;--pine3:#4a8c6a;--pine4:#6aad8a;
+  --gold:#c9a84c;--gold2:#e8c96a;--cream:#f5f0e8;--cream2:#ede8df;
+  --white:#fff;--dark:#0a1a11;
+  --txt:#0f1e16;--txt2:#3a5a47;--txt3:#7a9e8a;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Georgia',serif;background:var(--cream);color:var(--txt);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer}
+img{display:block;width:100%}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--pine2);border-radius:3px}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,box-shadow .4s;background:transparent}
+#nav.scrolled{background:var(--pine);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo-mark{display:flex;flex-direction:column}
+.logo-mark strong{color:var(--gold);font-size:20px;letter-spacing:3px;font-weight:400;text-transform:uppercase;font-family:Georgia,serif}
+.logo-mark span{color:rgba(255,255,255,.55);font-size:9px;letter-spacing:5px;text-transform:uppercase;font-family:sans-serif;margin-top:1px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-family:sans-serif;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--pine);border:none;padding:10px 24px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:sans-serif;font-weight:700;border-radius:2px;transition:background .2s}
+.nav-cta:hover{background:var(--gold2)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+.burger span{display:block;width:22px;height:1.5px;background:var(--white)}
+#mob-menu{display:none;position:fixed;inset:0;background:var(--pine);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+#mob-menu.open{display:flex}
+#mob-menu a{color:rgba(255,255,255,.8);font-size:20px;letter-spacing:3px;text-transform:uppercase;font-family:sans-serif}
+#mob-menu .close-btn{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--white);font-size:28px}
+
+/* ── HERO ── */
+#hero{height:100vh;min-height:600px;background:var(--pine);position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 20% 50%,rgba(74,140,106,.15) 0%,transparent 60%),
+  radial-gradient(ellipse at 80% 30%,rgba(201,168,76,.08) 0%,transparent 50%),
+  linear-gradient(160deg,#061209 0%,#0f2318 40%,#1a3d2b 70%,#2d6147 100%)}
+.hero-lines{position:absolute;inset:0;opacity:.04}
+.hero-lines svg{width:100%;height:100%}
+.hero-content{position:relative;z-index:2;padding:0 1.5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(201,168,76,.5);color:var(--gold);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:7px 20px;margin-bottom:2rem;font-family:sans-serif;border-radius:2px}
+.hero-badge::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%}
+.hero-badge::after{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%}
+.hero h1{font-size:clamp(36px,6vw,72px);color:var(--white);font-weight:400;line-height:1.1;margin-bottom:1.25rem}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero-desc{color:rgba(255,255,255,.55);font-size:clamp(13px,1.5vw,16px);font-family:sans-serif;letter-spacing:.5px;line-height:1.7;max-width:480px;margin:0 auto 2.5rem}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--pine);border:none;padding:15px 36px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-family:sans-serif;font-weight:700;border-radius:2px;transition:all .2s}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--white);border:0.5px solid rgba(255,255,255,.35);padding:15px 36px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-family:sans-serif;border-radius:2px;transition:all .2s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.4}
+.hero-scroll span{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:sans-serif;color:var(--white)}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--white),transparent);animation:scrollPulse 2s infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.2)}}
+
+/* ── STATS BAR ── */
+.stats-bar{background:var(--white);border-bottom:0.5px solid rgba(0,0,0,.07)}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-item{text-align:center;padding:2rem 1rem;border-right:0.5px solid rgba(0,0,0,.06);transition:background .2s}
+.stat-item:last-child{border-right:none}
+.stat-item:hover{background:var(--cream)}
+.stat-num{font-size:clamp(28px,4vw,42px);color:var(--pine);line-height:1;margin-bottom:6px}
+.stat-num sup{font-size:40%;vertical-align:super}
+.stat-lbl{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:2.5px;font-family:sans-serif}
+
+/* ── SECTION BASE ── */
+section{padding:6rem 1.5rem}
+.container{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:9px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;font-family:sans-serif;margin-bottom:.75rem}
+.section-title{font-size:clamp(26px,3.5vw,42px);font-weight:400;line-height:1.2;margin-bottom:1rem}
+.section-sub{font-size:14px;color:var(--txt3);font-family:sans-serif;line-height:1.8;max-width:500px}
+
+/* ── ABOUT ── */
+#about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-visual{position:relative}
+.about-box{background:var(--pine);aspect-ratio:4/5;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.about-box-inner{text-align:center;padding:2rem}
+.mountain-svg{opacity:.12;position:absolute;inset:0;width:100%;height:100%}
+.about-badge{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--gold);padding:1.5rem;border-radius:4px;text-align:center}
+.about-badge strong{display:block;font-size:32px;color:var(--pine);font-family:Georgia,serif;font-weight:400;line-height:1}
+.about-badge span{font-size:9px;color:var(--pine2);letter-spacing:2px;text-transform:uppercase;font-family:sans-serif}
+.about-text{padding-bottom:2rem}
+.about-text p{font-size:15px;color:var(--txt2);line-height:1.85;font-family:sans-serif;margin-bottom:1.25rem}
+.about-perks{margin-top:2rem;display:flex;flex-direction:column;gap:.75rem}
+.perk{display:flex;align-items:center;gap:.75rem;font-size:13px;color:var(--txt2);font-family:sans-serif}
+.perk-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0}
+
+/* ── FEATURES ── */
+#features{background:var(--cream)}
+.feat-header{text-align:center;margin-bottom:3.5rem}
+.feat-header .section-sub{margin:0 auto}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat-card{background:var(--white);padding:2rem 1.75rem;border-radius:8px;border:0.5px solid rgba(0,0,0,.06);transition:all .3s}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(26,61,43,.1)}
+.feat-icon{width:52px;height:52px;background:rgba(26,61,43,.07);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;font-size:20px;color:var(--pine2)}
+.feat-card h3{font-size:16px;color:var(--pine);margin-bottom:.5rem;font-family:sans-serif;font-weight:500}
+.feat-card p{font-size:13px;color:var(--txt3);font-family:sans-serif;line-height:1.7}
+
+/* ── ROOMS ── */
+#rooms{background:var(--pine);padding:6rem 1.5rem}
+.rooms-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem}
+.rooms-header .section-title{color:var(--white)}
+.rooms-header .eyebrow{color:var(--gold)}
+.rooms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
+.room-card{background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;transition:all .3s;cursor:pointer}
+.room-card:hover{background:rgba(255,255,255,.09);border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+.room-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.room-thumb.lux1{background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(201,168,76,.05))}
+.room-thumb.lux2{background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(74,140,106,.1))}
+.room-thumb.com1{background:linear-gradient(135deg,rgba(74,140,106,.2),rgba(26,61,43,.3))}
+.room-thumb.com2{background:linear-gradient(135deg,rgba(45,97,71,.3),rgba(74,140,106,.1))}
+.room-thumb.std1{background:linear-gradient(135deg,rgba(26,61,43,.4),rgba(45,97,71,.2))}
+.room-thumb.std2{background:linear-gradient(135deg,rgba(10,26,17,.5),rgba(26,61,43,.3))}
+.room-thumb-icon{font-size:36px;opacity:.6}
+.room-class{position:absolute;top:.75rem;right:.75rem;font-size:8px;letter-spacing:2px;text-transform:uppercase;font-family:sans-serif;padding:4px 10px;border-radius:2px}
+.class-prem{background:var(--gold);color:var(--pine);font-weight:700}
+.class-lux{background:rgba(201,168,76,.2);color:var(--gold)}
+.class-com{background:rgba(74,140,106,.2);color:var(--pine4)}
+.class-std{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+.room-info{padding:1.25rem}
+.room-name{font-size:14px;color:var(--white);font-family:sans-serif;font-weight:500;margin-bottom:4px}
+.room-desc{font-size:11px;color:rgba(255,255,255,.45);font-family:sans-serif;line-height:1.5}
+.rooms-cta{text-align:center}
+
+/* ── TREATMENT ── */
+#treatment{background:var(--white)}
+.treat-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+.treat-list{margin-top:2rem;display:flex;flex-direction:column;gap:0}
+.treat-item{display:flex;gap:1.25rem;padding:1.5rem 0;border-bottom:0.5px solid rgba(0,0,0,.07)}
+.treat-item:last-child{border-bottom:none}
+.treat-num{font-size:11px;color:var(--gold);font-family:sans-serif;letter-spacing:1px;flex-shrink:0;margin-top:3px}
+.treat-body h4{font-size:15px;color:var(--pine);font-family:sans-serif;font-weight:500;margin-bottom:.35rem}
+.treat-body p{font-size:13px;color:var(--txt3);font-family:sans-serif;line-height:1.65}
+.treat-visual{background:var(--cream);border-radius:8px;padding:2.5rem;position:sticky;top:100px}
+.treat-visual h3{font-size:18px;color:var(--pine);font-family:sans-serif;font-weight:500;margin-bottom:1.5rem}
+.treat-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.treat-tag{background:rgba(26,61,43,.07);color:var(--pine2);font-size:11px;font-family:sans-serif;padding:6px 14px;border-radius:20px}
+.treat-note{margin-top:2rem;padding:1.25rem;background:rgba(201,168,76,.1);border-left:2px solid var(--gold);border-radius:0 4px 4px 0}
+.treat-note p{font-size:12px;color:var(--txt2);font-family:sans-serif;line-height:1.65}
+
+/* ── WELLNESS ── */
+#wellness{background:var(--cream)}
+.well-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.well-card{border-radius:8px;overflow:hidden;position:relative}
+.well-card.tall{grid-row:span 2}
+.well-bg{aspect-ratio:1;background:var(--pine);display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;position:relative;overflow:hidden;min-height:220px}
+.well-card.tall .well-bg{aspect-ratio:auto;height:100%}
+.well-bg-art{position:absolute;inset:0;opacity:.12}
+.well-bg-art svg{width:100%;height:100%}
+.well-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,18,9,.8) 0%,transparent 60%)}
+.well-content{position:relative;z-index:1}
+.well-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:sans-serif;color:var(--gold);margin-bottom:.5rem}
+.well-title{font-size:20px;color:var(--white);font-weight:400;margin-bottom:.5rem}
+.well-sub{font-size:12px;color:rgba(255,255,255,.55);font-family:sans-serif;line-height:1.6}
+
+/* ── DINING ── */
+#dining{background:var(--pine)}
+.dining-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:center}
+.dining-text .section-title{color:var(--white)}
+.dining-text .eyebrow{color:var(--gold)}
+.dining-text p{font-size:15px;color:rgba(255,255,255,.6);font-family:sans-serif;line-height:1.85;margin-bottom:1.25rem}
+.dining-items{margin-top:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.dining-item{text-align:center;padding:1.5rem 1rem;background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:8px}
+.dining-item span{display:block;font-size:24px;margin-bottom:.5rem}
+.dining-item p{font-size:11px;color:rgba(255,255,255,.5);font-family:sans-serif;letter-spacing:.5px}
+.dining-visual{background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.1);border-radius:8px;padding:2.5rem;text-align:center}
+.farm-circle{width:200px;height:200px;border-radius:50%;border:0.5px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;position:relative}
+.farm-circle::before{content:'';position:absolute;inset:12px;border-radius:50%;border:0.5px solid rgba(201,168,76,.15)}
+.farm-circle span{font-size:50px}
+.farm-title{font-size:16px;color:var(--white);font-family:sans-serif;font-weight:400;margin-bottom:.5rem}
+.farm-sub{font-size:11px;color:rgba(255,255,255,.4);font-family:sans-serif;letter-spacing:1px;text-transform:uppercase}
+
+/* ── REVIEWS ── */
+#reviews{background:var(--white)}
+.reviews-header{text-align:center;margin-bottom:3.5rem}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.rev-card{padding:2rem;background:var(--cream);border-radius:8px;border:0.5px solid rgba(0,0,0,.06)}
+.rev-stars{color:var(--gold);font-size:14px;letter-spacing:3px;margin-bottom:1rem}
+.rev-text{font-size:14px;color:var(--txt2);line-height:1.75;font-style:italic;margin-bottom:1.25rem}
+.rev-author{display:flex;align-items:center;gap:.75rem}
+.rev-avatar{width:36px;height:36px;border-radius:50%;background:var(--pine3);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--white);font-family:sans-serif;font-weight:500;flex-shrink:0}
+.rev-name{font-size:12px;color:var(--pine);font-family:sans-serif;font-weight:500}
+.rev-loc{font-size:10px;color:var(--txt3);font-family:sans-serif;letter-spacing:.5px}
+.tripadvisor{text-align:center;margin-top:3rem;padding:2rem;background:var(--cream);border-radius:8px;border:0.5px solid rgba(0,0,0,.06)}
+.tripadvisor p{font-size:13px;color:var(--txt3);font-family:sans-serif}
+.tripadvisor strong{color:var(--pine);font-size:22px;display:block;margin:6px 0;font-family:sans-serif;font-weight:500}
+
+/* ── BOOKING ── */
+#booking{background:var(--cream)}
+.booking-wrap{background:var(--pine);border-radius:12px;padding:4rem;position:relative;overflow:hidden}
+.booking-wrap::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;border:0.5px solid rgba(201,168,76,.1)}
+.booking-wrap::after{content:'';position:absolute;bottom:-80px;left:-40px;width:200px;height:200px;border-radius:50%;border:0.5px solid rgba(255,255,255,.05)}
+.booking-inner{position:relative;z-index:1}
+.booking-inner .section-title{color:var(--white)}
+.booking-inner .eyebrow{color:var(--gold)}
+.booking-inner .section-sub{color:rgba(255,255,255,.5);margin-bottom:2.5rem}
+.booking-form{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:.75rem;align-items:end}
+.form-group label{display:block;font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;font-family:sans-serif;margin-bottom:.5rem}
+.form-group input,.form-group select{width:100%;background:rgba(255,255,255,.08);border:0.5px solid rgba(255,255,255,.15);padding:12px 14px;font-size:13px;color:var(--white);font-family:sans-serif;border-radius:4px;outline:none;transition:border-color .2s}
+.form-group input::placeholder{color:rgba(255,255,255,.3)}
+.form-group select option{background:var(--pine);color:var(--white)}
+.form-group input:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group select{-webkit-appearance:none;cursor:pointer}
+.submit-btn{background:var(--gold);color:var(--pine);border:none;padding:12px 28px;font-size:10px;letter-spacing:2.5px;font-weight:700;text-transform:uppercase;font-family:sans-serif;border-radius:4px;white-space:nowrap;height:45px;transition:background .2s}
+.submit-btn:hover{background:var(--gold2)}
+.booking-note{margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap}
+.booking-contact{font-size:13px;color:rgba(255,255,255,.45);font-family:sans-serif}
+.booking-contact strong{color:var(--white)}
+.monobank-note{font-size:11px;color:rgba(255,255,255,.3);font-family:sans-serif;text-align:right}
+
+/* ── MAP / CONTACTS ── */
+#contacts{background:var(--white)}
+.contacts-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.contact-item{margin-bottom:2rem}
+.contact-item label{font-size:9px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-family:sans-serif;display:block;margin-bottom:.5rem}
+.contact-item p,.contact-item a{font-size:15px;color:var(--txt2);font-family:sans-serif;line-height:1.7;display:block}
+.contact-item a:hover{color:var(--pine)}
+.map-placeholder{background:var(--cream);border-radius:8px;border:0.5px solid rgba(0,0,0,.07);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:var(--txt3)}
+.map-pin{font-size:36px}
+.map-placeholder p{font-size:12px;font-family:sans-serif;letter-spacing:1px;text-align:center;max-width:200px;line-height:1.6}
+.social-links{display:flex;gap:1rem;margin-top:2rem}
+.soc-btn{display:inline-flex;align-items:center;gap:.5rem;padding:9px 18px;border:0.5px solid rgba(0,0,0,.12);border-radius:4px;font-size:11px;color:var(--txt2);font-family:sans-serif;transition:all .2s}
+.soc-btn:hover{border-color:var(--pine);color:var(--pine)}
+
+/* ── PARTNERS ── */
+.partners{background:var(--cream);padding:3rem 1.5rem;text-align:center;border-top:0.5px solid rgba(0,0,0,.07)}
+.partners-label{font-size:9px;color:var(--txt3);letter-spacing:3px;text-transform:uppercase;font-family:sans-serif;margin-bottom:1.5rem}
+.partners-row{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap}
+.partner-tag{font-size:12px;color:var(--txt3);font-family:sans-serif;padding:8px 20px;border:0.5px solid rgba(0,0,0,.1);border-radius:20px}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);padding:4rem 1.5rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand strong{color:var(--gold);font-size:18px;letter-spacing:3px;font-weight:400;text-transform:uppercase;display:block;margin-bottom:.5rem;font-family:Georgia,serif}
+.footer-brand p{font-size:12px;color:rgba(255,255,255,.3);font-family:sans-serif;line-height:1.7;max-width:220px;margin-top:1rem}
+.footer-col h4{font-size:9px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-family:sans-serif;margin-bottom:1rem}
+.footer-col a,.footer-col p{font-size:12px;color:rgba(255,255,255,.4);font-family:sans-serif;line-height:2.2;display:block;transition:color .2s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{border-top:0.5px solid rgba(255,255,255,.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:10px;color:rgba(255,255,255,.2);font-family:sans-serif;letter-spacing:1px}
+.footer-langs{display:flex;gap:.75rem}
+.lang-btn{font-size:9px;color:rgba(255,255,255,.3);font-family:sans-serif;letter-spacing:2px;text-transform:uppercase;background:none;border:0.5px solid rgba(255,255,255,.1);padding:4px 10px;border-radius:2px;cursor:pointer;transition:all .2s}
+.lang-btn:hover,.lang-btn.active{color:var(--gold);border-color:var(--gold)}
+
+/* ── BACK TO TOP ── */
+#totop{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;background:var(--pine);color:var(--white);border:0.5px solid rgba(255,255,255,.15);border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;z-index:50}
+#totop.show{opacity:1;pointer-events:all}
+#totop:hover{background:var(--pine2)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .about-grid,.treat-grid,.dining-grid,.contacts-grid{grid-template-columns:1fr}
+  .feat-grid,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+  .rooms-grid{grid-template-columns:repeat(2,1fr)}
+  .well-grid{grid-template-columns:1fr}
+  .well-card.tall .well-bg{min-height:260px}
+  .booking-form{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .about-badge{right:0;bottom:-1rem}
+  .nav-links{display:none}
+  .burger{display:flex}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:580px){
+  section{padding:4rem 1.25rem}
+  .feat-grid,.reviews-grid,.rooms-grid{grid-template-columns:1fr}
+  .booking-form{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .dining-items{grid-template-columns:repeat(2,1fr)}
+  .rooms-header{flex-direction:column;align-items:flex-start;gap:.75rem}
+  .booking-wrap{padding:2rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="logo-mark">
+      <strong>Карпати</strong>
+      <span>Санаторій · Трускавець</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">Про нас</a></li>
+      <li><a href="#rooms">Номери</a></li>
+      <li><a href="#treatment">Лікування</a></li>
+      <li><a href="#wellness">Відпочинок</a></li>
+      <li><a href="#dining">Харчування</a></li>
+      <li><a href="#contacts">Контакти</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Забронювати</button>
+    <button class="burger" onclick="document.getElementById('mob-menu').classList.add('open')" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mob-menu">
+  <button class="close-btn" onclick="document.getElementById('mob-menu').classList.remove('open')">✕</button>
+  <a href="#about" onclick="document.getElementById('mob-menu').classList.remove('open')">Про нас</a>
+  <a href="#rooms" onclick="document.getElementById('mob-menu').classList.remove('open')">Номери</a>
+  <a href="#treatment" onclick="document.getElementById('mob-menu').classList.remove('open')">Лікування</a>
+  <a href="#wellness" onclick="document.getElementById('mob-menu').classList.remove('open')">Відпочинок</a>
+  <a href="#dining" onclick="document.getElementById('mob-menu').classList.remove('open')">Харчування</a>
+  <a href="#contacts" onclick="document.getElementById('mob-menu').classList.remove('open')">Контакти</a>
+  <button class="btn-gold" onclick="document.getElementById('mob-menu').classList.remove('open');document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Забронювати</button>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+      <polygon points="600,50 1100,650 100,650" fill="none" stroke="white" stroke-width="1"/>
+      <polygon points="600,150 950,600 250,600" fill="none" stroke="white" stroke-width="0.5"/>
+      <circle cx="600" cy="350" r="280" fill="none" stroke="white" stroke-width="0.5"/>
+      <circle cx="600" cy="350" r="180" fill="none" stroke="white" stroke-width="0.3"/>
+      <line x1="600" y1="0" x2="600" y2="700" stroke="white" stroke-width="0.3"/>
+      <line x1="0" y1="350" x2="1200" y2="350" stroke="white" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Трускавець · Заснований 1975</div>
+    <h1>Відновіть себе<br>в серці <em>Карпат</em></h1>
+    <p class="hero-desc">Преміальний санаторій з лікувальними мінеральними водами, власною фермою та повним SPA-комплексом у Трускавці</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Забронювати номер</button>
+      <button class="btn-ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Дізнатись більше</button>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Гортати</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">2×</div><div class="stat-lbl">Кращий санаторій Трускавця</div></div>
+    <div class="stat-item"><div class="stat-num">9</div><div class="stat-lbl">Типів номерів</div></div>
+    <div class="stat-item"><div class="stat-num">50<sup>+</sup></div><div class="stat-lbl">Лікувальних процедур</div></div>
+    <div class="stat-item"><div class="stat-num">48<sup>+</sup></div><div class="stat-lbl">Років досвіду</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-box">
+          <svg class="mountain-svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <polygon points="200,40 380,460 20,460" fill="none" stroke="white" stroke-width="2"/>
+            <polygon points="200,120 320,420 80,420" fill="none" stroke="white" stroke-width="1"/>
+            <polygon points="200,200 280,400 120,400" fill="none" stroke="white" stroke-width="0.8"/>
+            <circle cx="200" cy="250" r="100" fill="none" stroke="white" stroke-width="1"/>
+            <line x1="200" y1="0" x2="200" y2="500" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="460" x2="400" y2="460" stroke="white" stroke-width="0.5"/>
+          </svg>
+          <div class="about-box-inner">
+            <div style="color:rgba(255,255,255,.15);font-size:80px;line-height:1">🏔</div>
+            <div style="color:rgba(255,255,255,.3);font-size:11px;letter-spacing:4px;text-transform:uppercase;font-family:sans-serif;margin-top:1rem">Трускавець</div>
+          </div>
+          <div class="about-badge">
+            <strong>#1</strong>
+            <span>Трускавець</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="eyebrow">Про санаторій</div>
+        <h2 class="section-title">Ідеальний баланс<br>ціни та якості</h2>
+        <p>Санаторій «Карпати» — це місце, де лікування поєднується з розкішним відпочинком. Ми двічі перемагали у номінації «Кращий санаторій Трускавця» і продовжуємо встановлювати стандарти якості.</p>
+        <p>Тільки в «Карпатах» у вартість путівки входить триразове харчування «шведський стіл» з продуктів власної ферми, велика кількість лікувально-діагностичних процедур, басейн, сауна та тренажерний зал.</p>
+        <div class="about-perks">
+          <div class="perk"><div class="perk-dot"></div>Двічі кращий санаторій Трускавця</div>
+          <div class="perk"><div class="perk-dot"></div>Власна ферма — екологічно чисті продукти</div>
+          <div class="perk"><div class="perk-dot"></div>Ландшафтний парк з зоопарком та водопадом</div>
+          <div class="perk"><div class="perk-dot"></div>Басейн, сауна, тренажери — безкоштовно</div>
+          <div class="perk"><div class="perk-dot"></div>Власна кінно-спортивна база та аеродром</div>
+          <div class="perk"><div class="perk-dot"></div>Безкоштовний Wi-Fi по всій території</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="feat-header">
+      <div class="eyebrow">Наші переваги</div>
+      <h2 class="section-title">Чому обирають Карпати</h2>
+      <p class="section-sub">Всі послуги під одним дахом — від лікувальних процедур до розваг для всієї родини</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">💧</div>
+        <h3>Мінеральні води</h3>
+        <p>Власний бювет цілющих вод Трускавця. Знаменита «Нафтуся» та інші мінеральні джерела прямо на території</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏊</div>
+        <h3>Термальний басейн</h3>
+        <p>Новий термальний басейн з мінеральною водою, сауна, джакузі та тренажерний зал — все безкоштовно</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌿</div>
+        <h3>Власна ферма</h3>
+        <p>Перший в Трускавці санаторій з власним фермерським господарством. Свіжі яйця, м'ясо, молочні продукти щодня</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌲</div>
+        <h3>Ландшафтний парк</h3>
+        <p>Великий парк зі ставками, водопадом, міні-зоопарком та зоною для прогулянок на свіжому гірському повітрі</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏇</div>
+        <h3>Кінно-спортивна база</h3>
+        <p>Власна кінно-спортивна база з досвідченими інструкторами. Прогулянки верхи для дітей і дорослих</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">✈️</div>
+        <h3>Авіаекскурсії</h3>
+        <p>Унікальна послуга — власний аеродром, авіаекскурсії над Карпатами та чартерні рейси для гостей</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎬</div>
+        <h3>Розваги та культура</h3>
+        <p>Кінотеатр, диско-бар, концертний зал, дитяча кімната з вихователем — повна програма дозвілля</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🍽</div>
+        <h3>Шведський стіл</h3>
+        <p>Триразове харчування включено у вартість путівки. Дієтичні столи, розроблені лікарями-дієтологами</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏆</div>
+        <h3>Партнер monobank</h3>
+        <p>Зручна оплата та спеціальні умови для клієнтів monobank. Відпочинок став ще доступнішим</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <div class="container">
+    <div class="rooms-header">
+      <div>
+        <div class="eyebrow">Проживання</div>
+        <h2 class="section-title" style="color:var(--white)">Оберіть свій номер</h2>
+      </div>
+      <button class="btn-gold" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Забронювати зараз</button>
+    </div>
+    <div class="rooms-grid">
+      <div class="room-card">
+        <div class="room-thumb lux1"><div class="room-thumb-icon">🏛</div><div class="room-class class-prem">Преміум</div></div>
+        <div class="room-info"><div class="room-name">Апартаменти покращені</div><div class="room-desc">Найпросторіший варіант з панорамним виглядом та окремими кімнатами</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb lux2"><div class="room-thumb-icon">🛏</div><div class="room-class class-prem">Преміум</div></div>
+        <div class="room-info"><div class="room-name">Апартаменти</div><div class="room-desc">Просторі апартаменти з гостьовою зоною і повним набором зручностей</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb com1"><div class="room-thumb-icon">🪟</div><div class="room-class class-lux">Люкс</div></div>
+        <div class="room-info"><div class="room-name">Люкс покращений</div><div class="room-desc">Розкішний номер з видом на парк і преміальним інтер'єром</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb com2"><div class="room-thumb-icon">🛋</div><div class="room-class class-lux">Люкс</div></div>
+        <div class="room-info"><div class="room-name">Люкс</div><div class="room-desc">Класичний люкс з вітальнею, балконом та всіма зручностями</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb std1"><div class="room-thumb-icon">🚪</div><div class="room-class class-com">Комфорт</div></div>
+        <div class="room-info"><div class="room-name">Півлюкс</div><div class="room-desc">Комфортний двокімнатний номер з усіма зручностями</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb std1"><div class="room-thumb-icon">🛏</div><div class="room-class class-com">Комфорт</div></div>
+        <div class="room-info"><div class="room-name">Двомісний покращений</div><div class="room-desc">Сучасний двомісний номер після реновації</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb std2"><div class="room-thumb-icon">🪑</div><div class="room-class class-std">Стандарт</div></div>
+        <div class="room-info"><div class="room-name">Двомісний</div><div class="room-desc">Затишний номер для двох з усіма необхідними зручностями</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb std2"><div class="room-thumb-icon">🏠</div><div class="room-class class-std">Стандарт</div></div>
+        <div class="room-info"><div class="room-name">Одномісний покращений</div><div class="room-desc">Оновлений одномісний номер з комфортним інтер'єром</div></div>
+      </div>
+      <div class="room-card">
+        <div class="room-thumb std2"><div class="room-thumb-icon">🔑</div><div class="room-class class-std">Стандарт</div></div>
+        <div class="room-info"><div class="room-name">Одномісний</div><div class="room-desc">Функціональний номер зі всім необхідним для комфортного відпочинку</div></div>
+      </div>
+    </div>
+    <div class="rooms-cta">
+      <button class="btn-ghost" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Переглянути ціни та наявність</button>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENT -->
+<section id="treatment">
+  <div class="container">
+    <div class="treat-grid">
+      <div>
+        <div class="eyebrow">Медицина</div>
+        <h2 class="section-title">Лікувально-<br>діагностичний центр</h2>
+        <p class="section-sub">Один з найбільших медичних центрів курорту Трускавець з сучасним обладнанням та досвідченим персоналом</p>
+        <div class="treat-list">
+          <div class="treat-item"><div class="treat-num">01</div><div class="treat-body"><h4>Бальнеотерапія</h4><p>Лікувальні ванни з мінеральними водами Трускавця. Власний бювет «Нафтуся» та інших джерел</p></div></div>
+          <div class="treat-item"><div class="treat-num">02</div><div class="treat-body"><h4>Баро-камера</h4><p>Гіпербарична оксигенація — ефективна процедура для відновлення організму та покращення обміну речовин</p></div></div>
+          <div class="treat-item"><div class="treat-num">03</div><div class="treat-body"><h4>Фізіотерапія</h4><p>Широкий спектр фізіотерапевтичних процедур на сучасному обладнанні з досвідченим медперсоналом</p></div></div>
+          <div class="treat-item"><div class="treat-num">04</div><div class="treat-body"><h4>Дієтологія</h4><p>Індивідуальні дієтичні програми харчування, розроблені нашими лікарями-дієтологами</p></div></div>
+          <div class="treat-item"><div class="treat-num">05</div><div class="treat-body"><h4>Діагностика</h4><p>Лабораторні аналізи, УЗД, ЕКГ та інші діагностичні процедури безпосередньо на базі санаторію</p></div></div>
+        </div>
+      </div>
+      <div class="treat-visual">
+        <h3>Лікувані захворювання</h3>
+        <div class="treat-tags">
+          <span class="treat-tag">Сечокам'яна хвороба</span>
+          <span class="treat-tag">Захворювання нирок</span>
+          <span class="treat-tag">Хвороби печінки</span>
+          <span class="treat-tag">Жовчнокам'яна хвороба</span>
+          <span class="treat-tag">Цукровий діабет</span>
+          <span class="treat-tag">Захворювання ШКТ</span>
+          <span class="treat-tag">Захворювання суглобів</span>
+          <span class="treat-tag">Серцево-судинні</span>
+          <span class="treat-tag">Гіпертонія</span>
+          <span class="treat-tag">Остеохондроз</span>
+          <span class="treat-tag">Ожиріння</span>
+          <span class="treat-tag">Реабілітація</span>
+        </div>
+        <div class="treat-note">
+          <p>🩺 Лікуючий лікар призначається кожному гостю індивідуально. Програма лікування складається після первинного огляду та діагностики.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WELLNESS -->
+<section id="wellness">
+  <div class="container">
+    <div class="feat-header" style="margin-bottom:2.5rem">
+      <div class="eyebrow">Відпочинок та SPA</div>
+      <h2 class="section-title">Все для вашого дозвілля</h2>
+    </div>
+    <div class="well-grid">
+      <div class="well-card tall">
+        <div class="well-bg" style="background:var(--pine)">
+          <div class="well-bg-art"><svg viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice"><circle cx="200" cy="300" r="200" fill="none" stroke="white" stroke-width="1"/><circle cx="200" cy="300" r="140" fill="none" stroke="white" stroke-width="0.5"/><circle cx="200" cy="300" r="80" fill="none" stroke="white" stroke-width="0.5"/></svg></div>
+          <div class="well-overlay"></div>
+          <div class="well-content">
+            <div class="well-tag">SPA & Wellness</div>
+            <div class="well-title" style="font-size:26px">Термальний басейн з мінеральною водою</div>
+            <div class="well-sub">Новий термальний басейн, сауна, джакузі та тренажерний зал. Все включено у вартість путівки</div>
+          </div>
+        </div>
+      </div>
+      <div class="well-card">
+        <div class="well-bg" style="background:#0f2f1f;min-height:200px">
+          <div class="well-overlay"></div>
+          <div class="well-content">
+            <div class="well-tag">Природа</div>
+            <div class="well-title">Ландшафтний парк</div>
+            <div class="well-sub">Зоопарк, ставки, водопад</div>
+          </div>
+        </div>
+      </div>
+      <div class="well-card">
+        <div class="well-bg" style="background:#1a2f10;min-height:200px">
+          <div class="well-overlay"></div>
+          <div class="well-content">
+            <div class="well-tag">Для дітей</div>
+            <div class="well-title">Дитяча програма</div>
+            <div class="well-sub">Кімната з вихователем, анімація</div>
+          </div>
+        </div>
+      </div>
+      <div class="well-card">
+        <div class="well-bg" style="background:#0a1a0a;min-height:200px">
+          <div class="well-overlay"></div>
+          <div class="well-content">
+            <div class="well-tag">Розваги</div>
+            <div class="well-title">Кінотеатр та диско-бар</div>
+            <div class="well-sub">Фільми, концерти, вечірки</div>
+          </div>
+        </div>
+      </div>
+      <div class="well-card">
+        <div class="well-bg" style="background:#1f1a0a;min-height:200px">
+          <div class="well-overlay"></div>
+          <div class="well-content">
+            <div class="well-tag">Активний відпочинок</div>
+            <div class="well-title">Кінно-спортивна база</div>
+            <div class="well-sub">Прогулянки верхи, навчання</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DINING -->
+<section id="dining">
+  <div class="container">
+    <div class="dining-grid">
+      <div class="dining-text">
+        <div class="eyebrow">Харчування</div>
+        <h2 class="section-title">Власна ферма —<br>ваше здоров'я</h2>
+        <p>Ефективне лікування неможливе без правильного харчування. Саме тому ми перші й єдині в Трускавці, хто створив власну ферму для гостей.</p>
+        <p>Триразовий шведський стіл включений у вартість путівки. Страви готуються з екологічно чистих продуктів власного виробництва щодня.</p>
+        <div class="dining-items">
+          <div class="dining-item"><span>🥚</span><p>Яйця перепілки та курей</p></div>
+          <div class="dining-item"><span>🥩</span><p>Свинина, баранина, гусятина</p></div>
+          <div class="dining-item"><span>🦃</span><p>Індичатина та курятина</p></div>
+          <div class="dining-item"><span>🥗</span><p>Дієтичне меню</p></div>
+        </div>
+      </div>
+      <div class="dining-visual">
+        <div class="farm-circle"><span>🌾</span></div>
+        <div class="farm-title">Власна ферма «Карпати»</div>
+        <div class="farm-sub" style="margin-bottom:1.5rem">Трускавець · Від поля до столу</div>
+        <div style="border-top:0.5px solid rgba(255,255,255,.1);padding-top:1.5rem">
+          <div style="font-size:11px;color:rgba(255,255,255,.35);font-family:sans-serif;line-height:2">
+            ✓ Шведський стіл — 3 рази на день<br>
+            ✓ Дієтичні столи за призначенням лікаря<br>
+            ✓ Продукти без хімії та ГМО<br>
+            ✓ Сезонне меню<br>
+            ✓ Ресторани та бари на території
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="container">
+    <div class="reviews-header">
+      <div class="eyebrow">Відгуки гостей</div>
+      <h2 class="section-title">Що кажуть наші гості</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">«У вас уважний персонал, завжди ввічливий і добродушний. Особливо хочу відзначити лікуючого лікаря та ендокринолога — прекрасні спеціалісти. Сервіс на найвищому рівні!»</p>
+        <div class="rev-author"><div class="rev-avatar">ЕГ</div><div><div class="rev-name">Елдар-Гейдар</div><div class="rev-loc">Баку, Азербайджан</div></div></div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">«Чудовий санаторій! Відмінне харчування, лікування на висоті. Персонал дуже приємний та уважний. Парк просто казковий. Обов'язково приїдемо ще раз!»</p>
+        <div class="rev-author"><div class="rev-avatar">ОК</div><div><div class="rev-name">Олена К.</div><div class="rev-loc">Київ, Україна</div></div></div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">«Відпочиваємо тут вже третій рік поспіль. Рівень обслуговування зростає з кожним роком. Басейн з мінеральною водою — просто неймовірний. Рекомендую всім!»</p>
+        <div class="rev-author"><div class="rev-avatar">МС</div><div><div class="rev-name">Михайло С.</div><div class="rev-loc">Львів, Україна</div></div></div>
+      </div>
+    </div>
+    <div class="tripadvisor">
+      <p>Рейтинг на TripAdvisor</p>
+      <strong>4.5 / 5.0</strong>
+      <p>На основі сотень відгуків реальних гостей • <a href="https://www.tripadvisor.com/Hotel_Review-g940874-d3161030-Reviews-Resort_Hotel_Karpaty-Truskavets_Lviv_Oblast.html" style="color:var(--pine2)">Читати всі відгуки →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="container">
+    <div class="booking-wrap">
+      <div class="booking-inner">
+        <div class="eyebrow">Онлайн-бронювання</div>
+        <h2 class="section-title">Заплануйте своє оздоровлення</h2>
+        <p class="section-sub">Оберіть дати та категорію номера. Наш менеджер зв'яжеться з вами протягом 30 хвилин.</p>
+        <div class="booking-form">
+          <div class="form-group">
+            <label>Дата заїзду</label>
+            <input type="date" />
+          </div>
+          <div class="form-group">
+            <label>Дата виїзду</label>
+            <input type="date" />
+          </div>
+          <div class="form-group">
+            <label>Гостей</label>
+            <select>
+              <option>1 особа</option>
+              <option>2 особи</option>
+              <option>3 особи</option>
+              <option>4+ особи</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Категорія номера</label>
+            <select>
+              <option>Будь-яка</option>
+              <option>Одномісний</option>
+              <option>Двомісний</option>
+              <option>Одномісний покращений</option>
+              <option>Двомісний покращений</option>
+              <option>Півлюкс</option>
+              <option>Люкс</option>
+              <option>Люкс покращений</option>
+              <option>Апартаменти</option>
+              <option>Апартаменти покращені</option>
+            </select>
+          </div>
+          <button class="submit-btn">Забронювати</button>
+        </div>
+        <div class="booking-note">
+          <div class="booking-contact">Або телефонуйте: <strong>+38 (067) 826 20 00</strong> · Viber · WhatsApp</div>
+          <div class="monobank-note">💳 Зручна оплата через monobank</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts">
+  <div class="container">
+    <div class="contacts-grid">
+      <div>
+        <div class="eyebrow">Контакти</div>
+        <h2 class="section-title">Зв'яжіться з нами</h2>
+        <div class="contact-item">
+          <label>Адреса</label>
+          <p>вул. Карпатська, 2, Трускавець,<br>Львівська область, Україна</p>
+        </div>
+        <div class="contact-item">
+          <label>Телефони</label>
+          <a href="tel:+380324762000">+38 (03247) 62 000</a>
+          <a href="tel:+380678262000">+38 (067) 826 20 00 (Viber, WhatsApp)</a>
+          <a href="tel:+380952762000">+38 (095) 276 20 00 (Viber, WhatsApp)</a>
+        </div>
+        <div class="contact-item">
+          <label>Email</label>
+          <a href="mailto:info@san-karpaty.com.ua">info@san-karpaty.com.ua</a>
+        </div>
+        <div class="contact-item">
+          <label>Соціальні мережі</label>
+          <div class="social-links">
+            <a class="soc-btn" href="https://www.facebook.com/sanatorium.karpaty/" target="_blank">📘 Facebook</a>
+            <a class="soc-btn" href="https://www.instagram.com/san_karpaty/" target="_blank">📸 Instagram</a>
+            <a class="soc-btn" href="https://www.youtube.com/channel/UCJ2PRwCuU0LOyEm-0ntO-4w" target="_blank">▶️ YouTube</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="map-placeholder">
+          <div class="map-pin">📍</div>
+          <p>Трускавець, вул. Карпатська, 2</p>
+          <a href="https://www.google.com/maps/place/Санаторій+Карпати/@49.271871,23.5123133,17z" target="_blank" style="font-size:12px;color:var(--pine2);font-family:sans-serif;border:0.5px solid var(--pine3);padding:8px 20px;border-radius:4px;margin-top:.5rem">Відкрити на Google Maps →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<div class="partners">
+  <div class="partners-label">Партнери</div>
+  <div class="partners-row">
+    <span class="partner-tag">ФГ «Лаванда Раковець»</span>
+    <span class="partner-tag">Арт-Ресторан «Я і Ти»</span>
+    <span class="partner-tag">Козацька слобода Раковець</span>
+    <span class="partner-tag">monobank</span>
+    <span class="partner-tag">TripAdvisor</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <strong>Карпати</strong>
+        <span style="color:rgba(255,255,255,.3);font-size:9px;letter-spacing:4px;text-transform:uppercase;font-family:sans-serif">Санаторій · Трускавець</span>
+        <p>Преміальний санаторій у Трускавці з лікувальними водами, власною фермою та SPA-комплексом</p>
+      </div>
+      <div class="footer-col">
+        <h4>Послуги</h4>
+        <a href="#treatment">Лікування</a>
+        <a href="#wellness">SPA та відпочинок</a>
+        <a href="#dining">Харчування</a>
+        <a href="#rooms">Номери</a>
+        <a href="#features">Переваги</a>
+      </div>
+      <div class="footer-col">
+        <h4>Інформація</h4>
+        <a href="#">Новини</a>
+        <a href="#">Нагороди</a>
+        <a href="#">Відгуки</a>
+        <a href="#">Галерея</a>
+        <a href="#">Ціни</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <a href="tel:+380678262000">+38 (067) 826 20 00</a>
+        <a href="mailto:info@san-karpaty.com.ua">info@san-karpaty.com.ua</a>
+        <p style="margin-top:.5rem">вул. Карпатська, 2<br>Трускавець, Львівська обл.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 ТОВ ГКК «Карпати» · Всі права захищені</div>
+      <div class="footer-langs">
+        <button class="lang-btn active">UA</button>
+        <button class="lang-btn">EN</button>
+        <button class="lang-btn">PL</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Вгору">↑</button>
+
+<script>
+const nav = document.getElementById('nav');
+const totop = document.getElementById('totop');
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  nav.classList.toggle('scrolled', s > 60);
+  totop.classList.toggle('show', s > 400);
+});
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+document.querySelectorAll('.lang-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
