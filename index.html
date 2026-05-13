@@ -44,17 +44,17 @@ img{display:block;width:100%}
 
 /* ── HERO ── */
 #hero{height:100vh;min-height:600px;background:var(--pine);position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background-image:url('hero.jpg');background-size:cover;background-position:center top}
-.hero-bg::after{content:'';position:absolute;inset:0;background:rgba(5,18,10,0.68)}
+.hero-bg{position:absolute;inset:0;background-image:url('hero.jpg');background-size:cover;background-position:center center}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.75) 50%,rgba(0,0,0,0.85) 100%)}
 .hero-lines{position:absolute;inset:0;opacity:.04}
 .hero-lines svg{width:100%;height:100%}
 .hero-content{position:relative;z-index:2;padding:0 1.5rem}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(201,168,76,.5);color:var(--gold);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:7px 20px;margin-bottom:2rem;font-family:sans-serif;border-radius:2px}
 .hero-badge::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%}
 .hero-badge::after{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%}
-.hero h1{font-size:clamp(36px,6vw,72px);color:var(--white);font-weight:400;line-height:1.1;margin-bottom:1.25rem}
+.hero h1{font-size:clamp(36px,6vw,72px);color:#ffffff;font-weight:400;line-height:1.1;margin-bottom:1.25rem;text-shadow:0 2px 30px rgba(0,0,0,.9),0 0 60px rgba(0,0,0,.7)}
 .hero h1 em{color:var(--gold);font-style:italic}
-.hero-desc{color:rgba(255,255,255,.55);font-size:clamp(13px,1.5vw,16px);font-family:sans-serif;letter-spacing:.5px;line-height:1.7;max-width:480px;margin:0 auto 2.5rem}
+.hero-desc{color:rgba(255,255,255,.85);font-size:clamp(13px,1.5vw,16px);font-family:sans-serif;letter-spacing:.5px;line-height:1.7;max-width:480px;margin:0 auto 2.5rem;text-shadow:0 1px 8px rgba(0,0,0,.6)}
 .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .btn-gold{background:var(--gold);color:var(--pine);border:none;padding:15px 36px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-family:sans-serif;font-weight:700;border-radius:2px;transition:all .2s}
 .btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
